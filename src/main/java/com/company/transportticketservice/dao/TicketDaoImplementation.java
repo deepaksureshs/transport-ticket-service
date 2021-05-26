@@ -79,8 +79,12 @@ public class TicketDaoImplementation implements TicketDao {
 				throw new Exception("Capacity is full. Seat not available");
 			}
 		} else {
-			LOGGER.error("Route not assigned for selected vehicle on routedate");
-			throw new Exception("Route not assigned for selected vehicle on routedate");
+			LOGGER.error(
+					"Route " + tickets.getVehicleRouteMap().getRoute().getRouteId() + " not assigned for vehicle : "
+							+ tickets.getVehicleRouteMap().getVehicle().getVehicleId() + " at " + date);
+			throw new Exception(
+					"Route " + tickets.getVehicleRouteMap().getRoute().getRouteId() + " not assigned for vehicle : "
+							+ tickets.getVehicleRouteMap().getVehicle().getVehicleId() + " at " + date);
 		}
 		LOGGER.info("Commiting changes");
 		connection.commit();

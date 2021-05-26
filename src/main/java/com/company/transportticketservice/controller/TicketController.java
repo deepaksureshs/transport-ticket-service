@@ -7,6 +7,8 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
@@ -30,12 +32,12 @@ public class TicketController {
 	private static TicketService ticketService = TicketService.getTicketService();
 
 	@POST
-	public Response addTicket(String payload) {
+	public Response addTicket(String payload, @Context HttpHeaders headers) {
 		LOGGER.info("Request received for ticket generation :: payload : " + payload);
 		Request request = new Request();
 		try {
 			request = mapper.readValue(payload, Request.class);
-			ticketService.addTicket(request);
+			ticketService.addTicket(request, headers);
 			LOGGER.info("Request Processed Successfull");
 		} catch (Exception exception) {
 			ErrorResponse errorResponse = new ErrorResponse();
